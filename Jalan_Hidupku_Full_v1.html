@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Jalan Hidupku — Life Simulator</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
+:root{--ink:#eaf0f5;--muted:#9eacb9;--panel:rgba(18,27,36,.94);--line:rgba(255,255,255,.1);--mint:#79d6b1;--gold:#e8c27a;--blue:#8bb8e8}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#111a22;color:var(--ink);font-family:'DM Sans',sans-serif}button{font:inherit;color:inherit;border:0;cursor:pointer}
+#game{position:relative;width:100%;height:100%;overflow:hidden;background:#17232a}
+canvas{display:block;width:100%;height:100%;image-rendering:pixelated;touch-action:none}
+.topbar{position:absolute;left:18px;right:18px;top:16px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;pointer-events:none}
+.brand,.hud,.panel,.bottomnav,.toast{background:var(--panel);border:1px solid var(--line);box-shadow:0 12px 35px #0005;backdrop-filter:blur(14px)}
+.brand{padding:12px 16px;border-radius:15px;pointer-events:auto}.brand strong{font:700 16px 'Space Grotesk';letter-spacing:.2px}.brand small{display:block;color:var(--muted);font-size:10px;margin-top:3px;letter-spacing:1.5px;text-transform:uppercase}
+.hud{display:flex;gap:16px;padding:11px 15px;border-radius:15px;pointer-events:auto;align-items:center}.huditem{min-width:62px}.huditem b{display:block;font:700 14px 'Space Grotesk'}.huditem span{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+.hud button{background:#ffffff12;border:1px solid var(--line);padding:8px 10px;border-radius:9px}
+.leftstack{position:absolute;left:18px;top:104px;display:grid;gap:10px;width:215px}
+.panel{border-radius:16px;padding:13px 14px}.profile{display:flex;gap:11px;align-items:center}.avatar{width:42px;height:42px;border-radius:12px;background:linear-gradient(145deg,#d7a477,#77513f);display:grid;place-items:center;font-size:23px;border:2px solid #ffffff22}.profile b{font-size:13px}.profile small{display:block;color:var(--muted);font-size:11px;margin-top:3px}
+.stat{margin-top:12px}.stathead{display:flex;justify-content:space-between;font-size:11px;color:#cbd5dd;margin-bottom:5px}.bar{height:6px;background:#ffffff13;border-radius:10px;overflow:hidden}.bar i{display:block;height:100%;border-radius:10px;background:var(--mint);width:70%}.stat:nth-child(3) .bar i{background:#e7bb75}.stat:nth-child(4) .bar i{background:#8eb9e8}.quest h3,.panel h3{font:600 12px 'Space Grotesk';margin:0 0 10px;color:#dfe8ee;letter-spacing:.4px}.quest p{font-size:11px;color:var(--muted);line-height:1.5;margin:0}.quest button{margin-top:10px;width:100%;background:#79d6b11c;color:#9be6c7;padding:9px;border-radius:9px;font-size:11px;font-weight:700}
+.rightstack{position:absolute;right:18px;top:104px;width:190px;display:grid;gap:10px}.location{font-size:12px;font-weight:700}.location small{display:block;color:var(--muted);font-size:10px;font-weight:400;margin-top:4px}.actionlist{display:grid;gap:6px}.actionlist button{display:flex;align-items:center;gap:9px;text-align:left;background:#ffffff08;border:1px solid #ffffff0c;border-radius:10px;padding:9px;font-size:11px}.actionlist button:hover{background:#ffffff18}.actionlist em{font-style:normal;font-size:17px;width:22px;text-align:center}
+.bottomnav{position:absolute;bottom:15px;left:50%;transform:translateX(-50%);display:flex;gap:5px;padding:7px;border-radius:15px}.bottomnav button{background:transparent;padding:9px 13px;border-radius:10px;font-size:11px;color:var(--muted)}.bottomnav button.active,.bottomnav button:hover{background:#ffffff14;color:white}
+.controls{position:absolute;left:18px;bottom:18px;display:none;grid-template-columns:repeat(3,42px);grid-template-rows:repeat(2,42px);gap:4px}.controls button{border-radius:10px;background:#14212bd9;border:1px solid var(--line);font-size:18px}.controls .up{grid-column:2}.controls .left{grid-column:1;grid-row:2}.controls .down{grid-column:2;grid-row:2}.controls .right{grid-column:3;grid-row:2}
+.modalback{position:absolute;inset:0;background:#05090dbb;display:none;align-items:center;justify-content:center;padding:18px;z-index:10}.modalback.show{display:flex}.modal{width:min(540px,100%);max-height:85vh;overflow:auto;background:#17232d;border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 25px 80px #0009}.modal h2{font:700 21px 'Space Grotesk';margin:0 0 8px}.modal p{color:var(--muted);font-size:13px;line-height:1.65}.modalgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:16px}.choice{padding:13px;border:1px solid var(--line);border-radius:12px;background:#ffffff08;text-align:left}.choice b{display:block;font-size:12px;margin-bottom:5px}.choice span{font-size:11px;color:var(--muted);line-height:1.4}.choice:hover{border-color:#79d6b1aa;background:#79d6b111}.close{float:right;background:#ffffff12;padding:7px 10px;border-radius:8px}.toast{position:absolute;bottom:82px;left:50%;transform:translateX(-50%);padding:10px 15px;border-radius:10px;font-size:12px;opacity:0;transition:.25s;pointer-events:none}.toast.show{opacity:1}
+@media(max-width:760px){.topbar{left:10px;right:10px;top:10px}.brand{padding:9px 11px}.brand strong{font-size:13px}.brand small{font-size:8px}.hud{gap:8px;padding:8px}.huditem{min-width:42px}.huditem b{font-size:11px}.huditem span{font-size:8px}.hud button{padding:6px;font-size:10px}.leftstack{left:10px;top:78px;width:165px}.rightstack{right:10px;top:78px;width:145px}.panel{padding:10px;border-radius:13px}.avatar{width:34px;height:34px;font-size:18px}.profile b{font-size:11px}.profile small{font-size:9px}.stat{margin-top:9px}.stathead{font-size:9px}.quest h3,.panel h3{font-size:10px}.quest p{font-size:9px}.quest button{font-size:9px;padding:7px}.location{font-size:10px}.location small{font-size:9px}.actionlist button{font-size:9px;padding:7px}.actionlist em{font-size:14px}.bottomnav{bottom:8px;gap:1px;padding:5px}.bottomnav button{padding:8px 9px;font-size:9px}.controls{display:grid;left:10px;bottom:72px}.toast{bottom:68px;font-size:10px}.modal{padding:17px}.modal h2{font-size:18px}}
+@media(max-width:390px){.leftstack{width:145px}.rightstack{width:128px}.huditem:nth-child(3){display:none}.bottomnav button{padding:8px 7px}}
+</style>
+</head>
+<body>
+<div id="game">
+<canvas id="world"></canvas>
+<div class="topbar">
+ <div class="brand"><strong>JALAN HIDUPKU</strong><small>Life is a journey</small></div>
+ <div class="hud">
+  <div class="huditem"><b id="clock">07:30</b><span>Waktu</span></div>
+  <div class="huditem"><b id="day">Senin · 1</b><span>Hari</span></div>
+  <div class="huditem"><b id="money">Rp 125.000</b><span>Uang</span></div>
+  <button onclick="openModal('phone')">▦</button>
+ </div>
+</div>
+<div class="leftstack">
+ <div class="panel">
+  <div class="profile"><div class="avatar">🧑🏻</div><div><b id="playerName">Raka Pratama</b><small>Usia 15 · Pelajar SMA</small></div></div>
+  <div class="stat"><div class="stathead"><span>Energi</span><b id="energyVal">82%</b></div><div class="bar"><i id="energyBar" style="width:82%"></i></div></div>
+  <div class="stat"><div class="stathead"><span>Suasana hati</span><b id="moodVal">76%</b></div><div class="bar"><i id="moodBar" style="width:76%"></i></div></div>
+  <div class="stat"><div class="stathead"><span>Pengetahuan</span><b id="knowledgeVal">18%</b></div><div class="bar"><i id="knowledgeBar" style="width:18%"></i></div></div>
+ </div>
+ <div class="panel quest"><h3>✦ MISI HARI INI</h3><p id="questText">Berangkat ke sekolah dan ikuti kegiatan belajar.</p><button onclick="doQuest()">LANJUTKAN MISI →</button></div>
+</div>
+<div class="rightstack">
+ <div class="panel"><div class="location" id="placeName">Kawasan Cendana<small id="placeDesc">Kota Arunika · Lingkungan tempat tinggalmu</small></div></div>
+ <div class="panel"><h3>AKTIVITAS</h3><div class="actionlist">
+  <button onclick="interact('home')"><em>⌂</em> Istirahat di rumah</button>
+  <button onclick="interact('school')"><em>▤</em> Belajar di sekolah</button>
+  <button onclick="interact('shop')"><em>▣</em> Belanja di minimarket</button>
+  <button onclick="interact('park')"><em>♧</em> Bersantai di taman</button>
+  <button onclick="interact('cafe')"><em>☕</em> Nongkrong di kafe</button>
+ </div></div>
+</div>
+<div class="controls"><button class="up" data-move="up">▲</button><button class="left" data-move="left">◀</button><button class="down" data-move="down">▼</button><button class="right" data-move="right">▶</button></div>
+<div class="bottomnav"><button class="active" onclick="openModal('character')">Karakter</button><button onclick="openModal('map')">Peta</button><button onclick="openModal('school')">Sekolah</button><button onclick="openModal('phone')">Ponsel</button><button onclick="saveGame()">Simpan</button></div>
+<div class="toast" id="toast"></div>
+<div class="modalback" id="modalback" onclick="if(event.target===this)closeModal()"><div class="modal"><button class="close" onclick="closeModal()">✕</button><div id="modalContent"></div></div></div>
+</div>
+<script>
+const canvas=document.getElementById('world'),ctx=canvas.getContext('2d');
+let W=0,H=0,scale=1,camX=0,camY=0;
+const state={x:0,y:0,age:15,money:125000,energy:82,mood:76,knowledge:18,day:1,hour:7,minute:30,place:'Kawasan Cendana',quest:0,schoolDays:0,path:null,inventory:['Tas sekolah'],name:'Raka Pratama'};
+const locations=[
+ {id:'home',name:'Rumah Keluarga',desc:'Tempat pulang dan memulihkan energi',x:-3,y:2},
+ {id:'school',name:'SMA Cendana',desc:'Belajar, bertemu teman, dan membangun masa depan',x:5,y:-3},
+ {id:'shop',name:'Minimarket 24 Jam',desc:'Kebutuhan harian dan jajanan',x:7,y:4},
+ {id:'park',name:'Taman Kota',desc:'Ruang hijau untuk melepas penat',x:-5,y:-3},
+ {id:'cafe',name:'Kopi Sudut',desc:'Tempat berkumpul dan mencari inspirasi',x:1,y:6}
+];
+function resize(){W=canvas.width=innerWidth*devicePixelRatio;H=canvas.height=innerHeight*devicePixelRatio;canvas.style.width=innerWidth+'px';canvas.style.height=innerHeight+'px';ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);W=innerWidth;H=innerHeight;scale=Math.min(W/1100,H/720);draw()}
+addEventListener('resize',resize);
+function iso(x,y,z=0){return {x:W*.5+(x-y)*42*scale+camX,y:H*.52+(x+y)*21*scale-z*scale+camY}}
+function poly(points,fill,stroke){ctx.beginPath();points.forEach((p,i)=>{let q=iso(p[0],p[1],p[2]||0);i?ctx.lineTo(q.x,q.y):ctx.moveTo(q.x,q.y)});ctx.closePath();ctx.fillStyle=fill;ctx.fill();if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=1;ctx.stroke()}}
+function tile(x,y,color){poly([[x,y],[x+1,y],[x+1,y+1],[x,y+1]],color,'#15242a22')}
+function building(x,y,w,d,h,wall,roof,kind='office'){
+ const a=iso(x,y),b=iso(x+w,y),c=iso(x+w,y+d),e=iso(x,y+d),top=iso(x,y,h);
+ // sides
+ const p=(xx,yy,zz=0)=>iso(xx,yy,zz);
+ poly([[x,y,h],[x+w,y,h],[x+w,y+d,h],[x,y+d,h]],roof,'#17252b');
+ poly([[x,y,h],[x,y+d,h],[x,y+d,0],[x,y,0]],wall,'#101b20');
+ poly([[x,y,h],[x+w,y,h],[x+w,y,0],[x,y,0]],shade(wall),'#101b20');
+ // windows on front and side
+ for(let i=0;i<w;i+=1){for(let z=1;z<h;z+=1){poly([[x+i+.18,y,z+.15],[x+i+.78,y,z+.15],[x+i+.78,y,z+.7],[x+i+.18,y,z+.7]],kind==='house'?'#a9c5c3':'#7faaa9','#33484a')}} 
+ for(let j=0;j<d;j+=1){for(let z=1;z<h;z+=1){poly([[x,y+j+.18,z+.15],[x,y+j+.78,z+.15],[x,y+j+.78,z+.7],[x,y+j+.18,z+.7]],'#8eaaa7','#33484a')}}
+ // roof equipment
+ if(kind==='office'){poly([[x+.3,y+.3,h+.05],[x+w-.3,y+.3,h+.05],[x+w-.3,y+d-.3,h+.05],[x+.3,y+d-.3,h+.05]],'#65777a')}
+}
+function shade(hex){let n=parseInt(hex.slice(1),16),r=Math.max(0,((n>>16)&255)*.76),g=Math.max(0,((n>>8)&255)*.76),b=Math.max(0,(n&255)*.76);return '#'+[r,g,b].map(v=>Math.round(v).toString(16).padStart(2,'0')).join('')}
+function tree(x,y){let p=iso(x,y);ctx.fillStyle='#101a1d66';ctx.beginPath();ctx.ellipse(p.x,p.y+7*scale,15*scale,6*scale,0,0,Math.PI*2);ctx.fill();poly([[x,y,0],[x+.12,y,0],[x+.12,y,1.1],[x,y,1.1]],'#765b43');for(let k=0;k<3;k++){let q=iso(x,y,1+k*.38);ctx.fillStyle=['#315f4d','#3e7559','#548362'][k];ctx.beginPath();ctx.arc(q.x+(k-1)*5*scale,q.y-8*scale,13*scale-k*2,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#83a77c55';ctx.stroke()}}
+function car(x,y,color){let p=iso(x,y);ctx.save();ctx.translate(p.x,p.y);ctx.scale(scale,scale);ctx.fillStyle='#0c171a66';ctx.beginPath();ctx.ellipse(0,5,18,7,0,0,7);ctx.fill();ctx.fillStyle=color;ctx.beginPath();ctx.moveTo(-17,-2);ctx.lineTo(-10,-10);ctx.lineTo(8,-10);ctx.lineTo(17,-2);ctx.lineTo(15,5);ctx.lineTo(-14,5);ctx.closePath();ctx.fill();ctx.fillStyle='#a9c6c6';ctx.fillRect(-7,-8,12,6);ctx.fillStyle='#111';ctx.fillRect(-12,3,6,4);ctx.fillRect(8,3,6,4);ctx.restore()}
+function person(x,y,color='#d9a16e',isPlayer=false){let p=iso(x,y);ctx.save();ctx.translate(p.x,p.y);ctx.scale(scale,scale);ctx.fillStyle='#10191c66';ctx.beginPath();ctx.ellipse(0,2,7,3,0,0,7);ctx.fill();ctx.fillStyle='#26323b';ctx.fillRect(-4,-1,3,8);ctx.fillRect(1,-1,3,8);ctx.fillStyle=isPlayer?'#d2a16f':color;ctx.fillRect(-5,-14,10,11);ctx.fillStyle=isPlayer?'#263b52':'#343b42';ctx.fillRect(-6,-22,12,9);ctx.fillStyle='#20272b';ctx.fillRect(-5,-25,10,5);ctx.fillStyle='#f1d1ae';ctx.fillRect(-3,-18,2,2);ctx.restore()}
+function draw(){if(!W)return;ctx.clearRect(0,0,W,H);ctx.fillStyle='#263b3d';ctx.fillRect(0,0,W,H);
+ // distant skyline
+ for(let i=0;i<14;i++){let x=(i*113)%W;let hh=(i%4+2)*22*scale;ctx.fillStyle=i%2?'#31484a':'#2c4145';ctx.fillRect(x, H*.25-hh, 45*scale,hh)}
+ // ground tiles
+ for(let x=-15;x<16;x++)for(let y=-13;y<14;y++)tile(x,y,((x+y)%2===0)?'#65766a':'#607166');
+ // streets as broad diagonal bands
+ for(let i=-13;i<14;i++){poly([[i,-14],[i+1.35,-14],[i+1.35,14],[i,14]],'#303b3f');poly([[i+.05,-14],[i+.12,-14],[i+.12,14],[i+.05,14]],'#c1b99b22')}
+ // sidewalk / plaza
+ poly([[-9,-7],[9,-7],[9,8],[-9,8]],'#7c857b'); 
+ // roads overlays
+ poly([[-12,-1.1],[12,-1.1],[12,1.15],[-12,1.15]],'#343e42');
+ for(let i=-10;i<11;i+=2){poly([[i,-.04],[i+.85,-.04],[i+.85,.04],[i,.04]],'#d9cda5')}
+ poly([[-1.1,-12],[1.15,-12],[1.15,12],[-1.1,12]],'#343e42');
+ for(let i=-10;i<11;i+=2){poly([[-.04,i],[.04,i],[.04,i+.85],[-.04,i+.85]],'#d9cda5')}
+ // plots and buildings
+ building(-8,-6,3,2,3,'#b7a48b','#9a7860','house');
+ building(-4,-7,2,3,5,'#a8b4b0','#536b70','office');
+ building(3,-7,3,2,4,'#c4b39b','#8b6659','house');
+ building(7,-5,2,3,6,'#a7b7b5','#526e73','office');
+ building(-8,3,3,2,4,'#b7a58e','#7f6b5c','house');
+ building(-4,5,3,2,3,'#b3b0a1','#697c72','house');
+ building(3,4,3,2,4,'#b6a28d','#8b6555','house');
+ building(7,3,2,3,5,'#a9b7b2','#52666a','office');
+ // school campus
+ building(3,-4,3,1.7,3,'#d0c3a6','#8b6b50','office');
+ // park lawn
+ poly([[-8,-6],[-5,-6],[-5,-2],[-8,-2]],'#567e61');
+ for(let i=0;i<7;i++)tree(-7+(i%3),-5+Math.floor(i/3));
+ // props
+ for(let i=-8;i<9;i+=2){tree(i,7);tree(i,-8)}
+ // zebra crossings
+ for(let i=-.85;i<.9;i+=.35)poly([[i,-1.15],[i+.18,-1.15],[i+.18,-.7],[i,-.7]],'#e0ded0');
+ car(-4,-.55,'#a7b5b3');car(4,.55,'#b77c61');car(.55,4,'#728ba0');
+ // bus stop
+ let bp=iso(-5,-.8);ctx.fillStyle='#c3d2cf';ctx.fillRect(bp.x-10*scale,bp.y-28*scale,20*scale,28*scale);ctx.fillStyle='#83a7a3';ctx.fillRect(bp.x-8*scale,bp.y-25*scale,16*scale,12*scale);
+ // street lamps
+ for(let i=-6;i<=6;i+=4){let p=iso(i,-1.8);ctx.strokeStyle='#293438';ctx.lineWidth=3*scale;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(p.x,p.y-28*scale);ctx.stroke();ctx.fillStyle='#f2dca3';ctx.beginPath();ctx.arc(p.x,p.y-29*scale,4*scale,0,7);ctx.fill()}
+ // npc crowd
+ person(-2,-3,'#d1a077');person(2,2,'#bd8e72');person(5,1,'#d0b17d');person(-6,1,'#b7a1c7');person(6,-2,'#9fb8a7');
+ // player
+ person(state.x,state.y,'#d9a16e',true);
+ // label markers
+ locations.forEach(l=>{let p=iso(l.x,l.y);ctx.fillStyle='#101a20bb';ctx.beginPath();ctx.roundRect(p.x-43*scale,p.y-57*scale,86*scale,19*scale,6*scale);ctx.fill();ctx.fillStyle='#eef3ed';ctx.font=`${10*scale}px DM Sans`;ctx.textAlign='center';ctx.fillText(l.name,p.x,p.y-44*scale)});
+ // vignette
+ let grd=ctx.createRadialGradient(W/2,H/2,Math.min(W,H)*.2,W/2,H/2,Math.max(W,H)*.72);grd.addColorStop(0,'#0000');grd.addColorStop(1,'#09121688');ctx.fillStyle=grd;ctx.fillRect(0,0,W,H);
+}
+function updateUI(){document.getElementById('clock').textContent=String(state.hour).padStart(2,'0')+':'+String(state.minute).padStart(2,'0');document.getElementById('day').textContent=['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu'][(state.day-1)%7]+' · '+state.day;document.getElementById('money').textContent='Rp '+state.money.toLocaleString('id-ID');[['energy',state.energy],['mood',state.mood],['knowledge',state.knowledge]].forEach(([k,v])=>{document.getElementById(k+'Val').textContent=v+'%';document.getElementById(k+'Bar').style.width=v+'%'})}
+function tick(min=30){state.minute+=min;while(state.minute>=60){state.minute-=60;state.hour++;}if(state.hour>=24){state.hour-=24;state.day++;state.energy=Math.min(100,state.energy+30);state.quest=0;document.getElementById('questText').textContent='Hari baru dimulai. Tentukan kegiatanmu hari ini.';toast('Hari berganti. Energi pulih setelah tidur.')}updateUI()}
+function move(dir){let dx=0,dy=0;if(dir==='up')dy=-.45;if(dir==='down')dy=.45;if(dir==='left')dx=-.45;if(dir==='right')dx=.45;state.x=Math.max(-10,Math.min(10,state.x+dx));state.y=Math.max(-9,Math.min(9,state.y+dy));state.energy=Math.max(0,state.energy-.3);tick(2);draw()}
+addEventListener('keydown',e=>{let d={ArrowUp:'up',w:'up',ArrowDown:'down',s:'down',ArrowLeft:'left',a:'left',ArrowRight:'right',d:'right'}[e.key];if(d){e.preventDefault();move(d)}});
+document.querySelectorAll('[data-move]').forEach(b=>{let t;const start=()=>{move(b.dataset.move);t=setInterval(()=>move(b.dataset.move),160)},stop=()=>clearInterval(t);b.addEventListener('pointerdown',start);['pointerup','pointerleave','pointercancel'].forEach(ev=>b.addEventListener(ev,stop))});
+function nearest(){return locations.map(l=>({...l,dist:Math.hypot(l.x-state.x,l.y-state.y)})).sort((a,b)=>a.dist-b.dist)[0]}
+function interact(id){let l=locations.find(x=>x.id===id);state.place=l.name;document.getElementById('placeName').innerHTML=l.name+'<small>'+l.desc+'</small>';if(id==='home'){state.energy=Math.min(100,state.energy+28);state.mood=Math.min(100,state.mood+8);toast('Kamu beristirahat. Energi bertambah.')}
+if(id==='school'){if(state.hour<7||state.hour>15){toast('Sekolah sedang tidak dalam jam belajar. Coba datang pukul 07.00–15.00.');return}state.knowledge=Math.min(100,state.knowledge+12);state.energy=Math.max(0,state.energy-12);state.schoolDays++;state.quest=1;toast('Kegiatan belajar selesai. Pengetahuan meningkat!')}
+if(id==='shop'){if(state.money>=15000){state.money-=15000;state.mood=Math.min(100,state.mood+6);state.inventory.push('Minuman & camilan');toast('Kamu membeli camilan seharga Rp15.000.')}else toast('Uangmu belum cukup untuk berbelanja.')}
+if(id==='park'){state.mood=Math.min(100,state.mood+15);state.energy=Math.max(0,state.energy-3);toast('Udara segar membuat pikiran lebih tenang.')}
+if(id==='cafe'){if(state.money>=25000){state.money-=25000;state.mood=Math.min(100,state.mood+12);toast('Kamu menghabiskan waktu di kafe. -Rp25.000.')}else toast('Uangmu belum cukup untuk ke kafe.')}
+tick(45);updateUI();draw()}
+function doQuest(){if(state.quest===0){interact('school')}else{state.money+=10000;state.quest=2;document.getElementById('questText').textContent='Misi selesai! Besok ada kesempatan dan tantangan baru.';toast('Misi selesai. Kamu mendapat uang saku Rp10.000.');updateUI()}}
+function toast(s){let el=document.getElementById('toast');el.textContent=s;el.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>el.classList.remove('show'),2400)}
+function openModal(which){let c=document.getElementById('modalContent');let title='',body='';
+if(which==='character'){title='Karakter & Perkembangan';body=`<p>Perjalanan hidup <b>${state.name}</b> baru dimulai. Setiap keputusan kecil akan membentuk masa depanmu.</p><div class="modalgrid"><div class="choice"><b>Usia</b><span>${state.age} tahun</span></div><div class="choice"><b>Status</b><span>Pelajar SMA</span></div><div class="choice"><b>Hari sekolah</b><span>${state.schoolDays} hari</span></div><div class="choice"><b>Pengetahuan</b><span>${state.knowledge}%</span></div></div><p>Jaga energi, hubungan sosial, uang, dan kemampuanmu. Tidak ada satu jalan hidup yang paling benar.</p>`}
+if(which==='map'){title='Peta Kota Arunika';body='<p>Kota Arunika memiliki beberapa kawasan yang bisa kamu jelajahi. Gunakan tombol arah atau tombol WASD / panah pada keyboard untuk berjalan.</p><div class="modalgrid">'+locations.map(l=>`<button class="choice" onclick="travel('${l.id}')"><b>${l.name}</b><span>${l.desc}</span></button>`).join('')+'</div>'}
+if(which==='school'){title='SMA Cendana';body=`<p>Sekolah adalah tempatmu belajar, berteman, mengikuti kegiatan, dan menyiapkan pilihan setelah lulus.</p><div class="modalgrid"><div class="choice"><b>Akademik</b><span>Pengetahuan ${state.knowledge}%</span></div><div class="choice"><b>Kehadiran</b><span>${state.schoolDays} hari belajar</span></div><button class="choice" onclick="interact('school');closeModal()"><b>📚 Ikuti pelajaran</b><span>Belajar dan tingkatkan pengetahuan.</span></button><button class="choice" onclick="toast('Fitur kegiatan ekstrakurikuler akan terbuka dalam pengembangan berikutnya.')"><b>⚽ Ekstrakurikuler</b><span>Bangun minat dan relasi.</span></button></div>`}
+if(which==='phone'){title='Ponsel';body=`<p>Ringkasan kehidupanmu saat ini.</p><div class="modalgrid"><div class="choice"><b>Dompet</b><span>Rp ${state.money.toLocaleString('id-ID')}</span></div><div class="choice"><b>Inventaris</b><span>${state.inventory.join(', ')}</span></div><div class="choice"><b>Kalender</b><span>Hari ke-${state.day}</span></div><div class="choice"><b>Tujuan</b><span>Lulus SMA dan tentukan masa depan.</span></div></div><p>Setelah lulus, kamu dapat memilih kuliah, bekerja, membangun usaha, atau mengambil jeda untuk mencari arah.</p>`}
+c.innerHTML='<h2>'+title+'</h2>'+body;document.getElementById('modalback').classList.add('show')}
+function travel(id){let l=locations.find(x=>x.id===id);state.x=l.x;state.y=l.y;interact(id);closeModal()}
+function closeModal(){document.getElementById('modalback').classList.remove('show')}
+function saveGame(){localStorage.setItem('jalanHidupkuSave',JSON.stringify(state));toast('Progres tersimpan di perangkat ini.')}
+function loadGame(){try{let s=JSON.parse(localStorage.getItem('jalanHidupkuSave'));if(s)Object.assign(state,s)}catch(e){}}
+loadGame();resize();updateUI();
+setInterval(()=>{tick(1);},60000);
+</script>
+</body></html>

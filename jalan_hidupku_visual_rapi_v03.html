@@ -1,0 +1,140 @@
+<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><meta name="theme-color" content="#17251f"><title>Jalan Hidupku — Life Simulator</title>
+<style>
+:root{--ink:#24352b;--muted:#78847b;--bg:#f1f2e9;--paper:#fffdf7;--green:#4d805e;--line:#e5e6dc}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 system-ui,sans-serif}button{border:0;border-radius:11px;padding:10px 12px;background:var(--green);color:white;font-weight:750;cursor:pointer}button:disabled{opacity:.4}.soft{background:#edf1e9;color:var(--ink)}.gold{background:#fff0d8;color:#80541f}header{background:#17251f;color:white;padding:11px 17px;display:flex;justify-content:space-between;align-items:center;gap:8px;position:sticky;top:0;z-index:5}.brand{font-size:18px;font-weight:900;display:flex;align-items:center;gap:9px}.logo{width:35px;height:35px;background:#f0c47d;color:#27372c;border-radius:11px;display:grid;place-items:center}.brand small{display:block;color:#b7c6b8;font-size:9px;letter-spacing:1.5px;text-transform:uppercase}.chip{border:1px solid #3b5547;background:#2b4035;border-radius:30px;padding:7px 10px;font-size:11px;color:#e8eee7}.chip b{color:#f4ca83}.topright{display:flex;gap:7px;align-items:center}main{max-width:1240px;margin:auto;padding:15px;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(300px,.85fr);gap:14px}.heading{display:flex;justify-content:space-between;align-items:end;margin-bottom:9px}.eyebrow{font-size:10px;font-weight:900;letter-spacing:1.5px;color:var(--green);text-transform:uppercase}h1{font-size:23px;margin:2px 0;letter-spacing:-.7px}.muted{color:var(--muted);font-size:11px}.card,.stat{background:var(--paper);border:1px solid var(--line);border-radius:16px;box-shadow:0 4px 14px #20352b0a;overflow:hidden}.scenehead{padding:11px 14px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between}.scene{width:100%;height:auto;aspect-ratio:760/470;display:block;background:#c9ddb9;image-rendering:pixelated;touch-action:manipulation;border-radius:10px}.hint{position:absolute;bottom:13px;left:13px;background:#1c3028dc;color:white;border-radius:8px;padding:6px 9px;font-size:10px}.scenewrap{position:relative;padding:8px;background:#e6eadf;overflow:hidden}.mapfoot{padding:9px;display:flex;gap:6px;flex-wrap:wrap}.tag{font-size:10px;background:#f1f2e9;border-radius:8px;padding:6px 8px;color:#617064}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:9px 0}.stat{padding:9px 11px}.stat span{display:block;color:var(--muted);font-size:10px}.stat b{font-size:17px}.stat small{display:block;color:var(--green);font-size:9px}.panel{padding:12px;margin-bottom:10px}.panel h2{font-size:13px;margin:0 0 9px;display:flex;justify-content:space-between}.panel h2 small{font-size:10px;color:var(--muted);font-weight:500}.actions{display:grid;grid-template-columns:1fr 1fr;gap:7px}.actions button{text-align:left;font-size:11px;padding:9px}.actions button span{display:block;font-size:9px;font-weight:500;opacity:.8;margin-top:2px}.place{font-size:18px;font-weight:850}.bars{display:grid;grid-template-columns:1fr 1fr;gap:9px}.barlabel{display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px}.bar{height:7px;background:#edf0e9;border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;background:#75a17c;border-radius:9px}.bar i.low{background:#d47a60}.dpad{display:grid;grid-template-columns:repeat(3,40px);grid-template-rows:repeat(2,36px);gap:4px}.dpad button{padding:4px;background:#edf1e9;color:#314538}.up{grid-column:2}.left{grid-column:1;grid-row:2}.down{grid-column:2;grid-row:2}.right{grid-column:3;grid-row:2}.feed{max-height:130px;overflow:auto;font-size:10px;color:var(--muted)}.feed div{padding:5px 0;border-bottom:1px dashed var(--line)}.event{background:#f2f4ed;border-radius:10px;padding:9px;font-size:11px;margin:6px 0}.toast{position:fixed;bottom:16px;left:50%;transform:translate(-50%,18px);opacity:0;background:#17251f;color:white;border-radius:11px;padding:10px 15px;z-index:10;transition:.2s;pointer-events:none}.toast.show{opacity:1;transform:translate(-50%,0)}.modalback{position:fixed;inset:0;background:#17251fcc;display:none;place-items:center;padding:16px;z-index:20}.modalback.show{display:grid}.modal{max-width:460px;width:100%;background:var(--paper);border-radius:18px;padding:19px}.modal h2{margin:0}.modal p{font-size:12px;color:var(--muted)}.choices{display:grid;grid-template-columns:1fr 1fr;gap:8px}.choices button{text-align:left}.choices small{display:block;font-size:10px;font-weight:500;margin-top:4px}footer{text-align:center;color:#8d988e;font-size:10px;padding:0 12px 18px}
+@media(max-width:850px){main{grid-template-columns:1fr}.right{display:grid;grid-template-columns:1fr 1fr;gap:9px}.wide{grid-column:1/-1}.panel{margin:0}}@media(max-width:560px){header{padding:9px 10px}.brand{font-size:15px}.chip:nth-child(2){display:none}main{padding:9px;gap:9px}h1{font-size:20px}.stats{grid-template-columns:repeat(2,1fr)}.right{display:flex;flex-direction:column}.panel{padding:11px}.scenewrap{padding:5px}}
+</style></head><body>
+<header><div class="brand"><div class="logo">🌱</div><div>Jalan Hidupku<small>life simulator · indonesia</small></div></div><div class="topright"><div class="chip">📅 <b id="date">Senin · 1</b></div><div class="chip">🕒 <b id="clock">07:00</b></div><button class="soft" id="save">💾 Simpan</button></div></header>
+<main><section>
+<div class="heading"><div><div class="eyebrow">Kisah hidupmu dimulai di sini</div><h1 id="hello">Halo, Fathan!</h1><div class="muted" id="age">Usia 15 tahun · Kelas 10 SMA</div></div><div class="muted">☀️ Cerah · Jakarta</div></div>
+<div class="stats"><div class="stat"><span>💵 Uang saku</span><b id="cash">Rp 150.000</b><small>Keuangan pribadi</small></div><div class="stat"><span>📚 Akademik</span><b id="study">45</b><small>Performa belajar</small></div><div class="stat"><span>🤝 Sosial</span><b id="social">35</b><small>Pertemanan</small></div><div class="stat"><span>✨ Reputasi</span><b id="rep">50</b><small>Nama baik</small></div></div>
+<div class="card"><div class="scenehead"><b>🗺️ Lingkungan sekitar</b><span class="muted">WASD / tombol arah / ketuk peta</span></div><div class="scenewrap"><canvas id="world" class="scene" width="760" height="470"></canvas><div class="hint">Dekati bangunan untuk membuka aktivitas</div></div><div class="mapfoot"><span class="tag">🏫 SMA</span><span class="tag">🏠 Rumah</span><span class="tag">🏪 Minimarket</span><span class="tag">🌳 Taman</span><span class="tag">☕ Kafe</span></div></div>
+<div class="stats"><div class="stat"><span>⚡ Energi</span><b id="energy">80</b><small>Tenaga harian</small></div><div class="stat"><span>🍜 Lapar</span><b id="hunger">25</b><small id="hungry">Cukup kenyang</small></div><div class="stat"><span>😊 Mood</span><b id="mood">75</b><small>Kondisi emosi</small></div><div class="stat"><span>📅 Kehadiran</span><b id="attendance">0</b><small>Hari sekolah</small></div></div>
+</section><aside class="right">
+<div class="panel card wide"><h2>📍 Aktivitas di lokasi <small id="near">Jalan lingkungan</small></h2><div class="place" id="place">Jalan perumahan</div><div class="muted" id="desc" style="margin:3px 0 9px">Jelajahi lingkungan untuk menemukan tempat beraktivitas.</div><div class="actions" id="actions"></div></div>
+<div class="panel card"><h2>🧍 Kondisi karakter</h2><div class="bars" id="bars"></div><div class="muted" style="margin-top:9px">Jaga kebutuhan agar aktivitas berjalan optimal.</div></div>
+<div class="panel card"><h2>🕹️ Kontrol karakter</h2><div style="display:flex;align-items:center;gap:12px"><div class="dpad"><button class="up" data-dir="up">▲</button><button class="left" data-dir="left">◀</button><button class="down" data-dir="down">▼</button><button class="right" data-dir="right">▶</button></div><div class="muted">Gunakan WASD, tombol panah, atau kontrol arah. Dekati bangunan untuk beraktivitas.<button class="soft" id="goHome" style="display:block;margin-top:7px">🛌 Pulang & istirahat</button></div></div></div>
+<div class="panel card wide"><h2>📈 Pendidikan & masa depan <small id="grade">Kelas 10</small></h2><div class="event"><b id="schoolStatus">Perjalanan SMA baru dimulai</b><span id="schoolDesc">Hadiri sekolah untuk mengumpulkan pengalaman.</span></div><div id="future"></div></div>
+<div class="panel card wide"><h2>📓 Buku harian <small>Aktivitas terbaru</small></h2><div class="feed" id="feed"></div></div>
+</aside></main><footer>Jalan Hidupku · Prototipe 0.1 · Progres tersimpan otomatis di browser ini</footer><div class="toast" id="toast"></div>
+<div class="modalback" id="modal"><div class="modal"><div class="eyebrow">Usia 18 tahun · Babak baru</div><h2>Hidupmu, pilihanmu.</h2><p>Kamu telah menyelesaikan masa SMA. Sekarang tentukan langkah berikutnya.</p><div class="choices"><button onclick="choose('college')">🎓 Kuliah<small>Bangun ilmu dan peluang profesi.</small></button><button onclick="choose('work')">💼 Langsung bekerja<small>Penghasilan dan pengalaman lebih awal.</small></button><button onclick="choose('business')">🏪 Wirausaha<small>Mulai bisnis dengan risiko sendiri.</small></button><button onclick="choose('gap')">🌏 Gap year<small>Jelajahi pilihan hidup.</small></button></div><button class="soft" style="width:100%;margin-top:9px" onclick="document.getElementById('modal').classList.remove('show')">Nanti dulu</button></div></div>
+<script>
+(()=>{
+const $=id=>document.getElementById(id),fmt=n=>'Rp '+Math.round(n).toLocaleString('id-ID');
+let s={name:'Fathan',age:15,grade:10,day:1,min:420,cash:150000,study:45,social:35,rep:50,energy:80,hunger:25,mood:75,attendance:0,progress:0,path:null,x:290,y:220,logs:[],relation:0};
+const P=[{id:'home',n:'Rumah',d:'Tempat beristirahat, belajar, dan menghabiskan waktu bersama keluarga.',x:90,y:90,w:130,h:100,c:'#d9a879',e:'🏠'},{id:'school',n:'SMA Nusantara',d:'Belajar, mengikuti kegiatan sekolah, dan bertemu teman.',x:530,y:75,w:150,h:105,c:'#d7c99b',e:'🏫'},{id:'shop',n:'Minimarket',d:'Tempat membeli makanan dan kebutuhan sehari-hari.',x:75,y:315,w:130,h:85,c:'#b5c9a4',e:'🏪'},{id:'park',n:'Taman Kota',d:'Bersantai, olahraga, dan bertemu orang baru.',x:330,y:330,w:140,h:85,c:'#91b58b',e:'🌳'},{id:'cafe',n:'Kafe Sudut',d:'Tempat nongkrong atau kerja paruh waktu.',x:545,y:315,w:135,h:85,c:'#c9957c',e:'☕'}];
+function log(t){s.logs.unshift(tm()+' · '+t);s.logs=s.logs.slice(0,20)}function tm(){return String(Math.floor(s.min/60)%24).padStart(2,'0')+':'+String(s.min%60).padStart(2,'0')}function day(){return ['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu'][(s.day-1)%7]}
+let timer;function toast(t){$('toast').textContent=t;$('toast').classList.add('show');clearTimeout(timer);timer=setTimeout(()=>$('toast').classList.remove('show'),1900)}
+function save(silent){localStorage.setItem('jalanHidupSave',JSON.stringify(s));if(!silent)toast('Progres berhasil disimpan!')}try{let v=JSON.parse(localStorage.getItem('jalanHidupSave'));if(v&&v.age)s={...s,...v}}catch(e){}
+function time(m){s.min+=m;if(s.min>=1440){s.min-=1440;s.day++;s.energy=Math.min(100,s.energy+28);s.hunger=Math.min(100,s.hunger+18);s.mood=Math.min(100,s.mood+8);log('Hari berganti. Semangat menjalani hari baru!')}s.energy=Math.max(0,s.energy-m*.045);s.hunger=Math.min(100,s.hunger+m*.035);if(s.hunger>80)s.mood=Math.max(0,s.mood-2)}
+function clamp(k,n){s[k]=Math.max(0,Math.min(100,s[k]+n))}
+function near(){return P.find(p=>Math.abs(s.x-(p.x+p.w/2))<p.w/2+22&&Math.abs(s.y-(p.y+p.h/2))<p.h/2+22)}
+function move(dx,dy){const sx=(dx-dy)*15,sy=(dx+dy)*7.5;s.x=Math.max(24,Math.min(736,s.x+sx));s.y=Math.max(30,Math.min(438,s.y+sy));time(1);draw();renderPlace()}
+function draw(){
+ const c=$('world'),g=c.getContext('2d');
+ g.clearRect(0,0,760,470);
+ // Ground: warm, calm pixel-art neighborhood
+ g.fillStyle='#c9ddb9';g.fillRect(0,0,760,470);
+ function poly(points,color,stroke){
+   g.beginPath();g.moveTo(points[0][0],points[0][1]);
+   points.slice(1).forEach(q=>g.lineTo(q[0],q[1]));g.closePath();
+   g.fillStyle=color;g.fill();
+   if(stroke){g.strokeStyle=stroke;g.lineWidth=2;g.stroke();}
+ }
+ function diamond(cx,cy,rx,ry,color,stroke){
+   poly([[cx,cy-ry],[cx+rx,cy],[cx,cy+ry],[cx-rx,cy]],color,stroke);
+ }
+ // Quiet grass pattern, intentionally restrained
+ for(let y=22;y<470;y+=42)for(let x=20;x<760;x+=58){
+   diamond(x+(Math.floor(y/42)%2)*29,y,28,17,((x+y)%4<2)?'#c4d8b5':'#cce0c0');
+ }
+ // Main roads and sidewalks
+ poly([[0,125],[760,390],[760,444],[0,179]],'#b8b7a8');
+ poly([[0,125],[760,390],[760,405],[0,140]],'#d7d1bd');
+ poly([[95,470],[0,420],[560,0],[630,0]],'#b8b7a8');
+ poly([[115,470],[22,420],[574,0],[590,0]],'#d7d1bd');
+ // Road markings
+ g.strokeStyle='#eee7d4';g.lineWidth=2;g.setLineDash([13,13]);
+ g.beginPath();g.moveTo(0,151);g.lineTo(760,416);g.stroke();
+ g.beginPath();g.moveTo(105,470);g.lineTo(580,0);g.stroke();g.setLineDash([]);
+ // Garden plots
+ [[66,236,78,39],[385,85,82,40],[690,250,72,37],[280,400,72,35]].forEach(([x,y,w,h])=>{
+   diamond(x,y,w,h,'#9fbe8d','#8eae7f');diamond(x,y-2,w-9,h-7,'#a9c99a');
+ });
+ // Flower clusters
+ function flowers(x,y){['#f2c5ce','#f5df9a','#e9b8d8'].forEach((col,i)=>{g.fillStyle=col;g.fillRect(x+i*7,y+(i%2)*4,4,4);});}
+ function tree(x,y,scale=1){
+   g.fillStyle='#806044';g.fillRect(x-4*scale,y-4*scale,8*scale,23*scale);
+   diamond(x,y-17*scale,23*scale,17*scale,'#477c4d','#3d7045');
+   diamond(x-10*scale,y-26*scale,17*scale,13*scale,'#5b9258');
+   diamond(x+10*scale,y-26*scale,17*scale,13*scale,'#3f7548');
+   g.fillStyle='#a9cc80';g.fillRect(x-12*scale,y-28*scale,5*scale,3*scale);
+ }
+ function building(p){
+   const cx=p.x+p.w/2, cy=p.y+p.h/2, rx=p.w*.40, ry=p.h*.28, wall=43;
+   // cast shadow
+   diamond(cx+10,cy+12,rx+12,ry+9,'#00000018');
+   // two visible walls
+   poly([[cx-rx,cy-wall],[cx,cy-wall+ry],[cx,cy+ry],[cx-rx,cy]],'#a96e55','#80513f');
+   poly([[cx,cy-wall+ry],[cx+rx,cy-wall],[cx+rx,cy],[cx,cy+ry]],'#c18160','#80513f');
+   // roof
+   poly([[cx,cy-wall-ry],[cx+rx+8,cy-wall],[cx,cy-wall+ry+3],[cx-rx-8,cy-wall]],p.c,'#795342');
+   // roof tiles
+   g.strokeStyle='#ffffff35';g.lineWidth=2;
+   g.beginPath();g.moveTo(cx-rx*.65,cy-wall);g.lineTo(cx,cy-wall+ry*.72);g.lineTo(cx+rx*.65,cy-wall);g.stroke();
+   // door + windows on front wall
+   g.fillStyle='#684638';g.fillRect(cx-7,cy-25,14,25);
+   g.fillStyle='#a9d1d9';g.fillRect(cx-rx*.58,cy-31,14,13);g.fillRect(cx+rx*.28,cy-31,14,13);
+   g.strokeStyle='#f0dfc2';g.lineWidth=2;g.strokeRect(cx-rx*.58,cy-31,14,13);g.strokeRect(cx+rx*.28,cy-31,14,13);
+   // sign and label
+   g.fillStyle='#fff7e7';g.fillRect(cx-35,cy-wall-ry-14,70,14);
+   g.fillStyle='#405044';g.font='bold 10px system-ui';g.textAlign='center';g.fillText(p.n,cx,cy-wall-ry-4);
+ }
+ // Draw back-to-front scenery
+ [[45,140,.95],[345,95,1.1],[710,130,.9],[235,365,.8],[490,420,1],[705,425,.8],[390,255,.65]].forEach(a=>tree(...a));
+ [[125,150],[425,108],[690,165],[80,270],[470,405]].forEach(([x,y])=>flowers(x,y));
+ P.forEach(building);
+ // Park furniture and small street props
+ [[105,250],[610,225],[300,420]].forEach(([x,y])=>{
+   poly([[x-17,y-5],[x+13,y+1],[x+13,y+7],[x-17,y+1]],'#936447');
+   g.fillStyle='#6f4c36';g.fillRect(x-12,y+2,4,8);g.fillRect(x+8,y+5,4,8);
+ });
+ [[250,120],[475,310],[670,70],[145,410]].forEach(([x,y])=>{
+   g.fillStyle='#5b6d56';g.fillRect(x-2,y,4,15);g.fillStyle='#f4d88e';
+   g.beginPath();g.arc(x,y-2,5,0,Math.PI*2);g.fill();
+ });
+ // Static townspeople
+ function npc(x,y,shirt,phase=0){
+   g.fillStyle='#0002';g.beginPath();g.ellipse(x,y+10,7,3,0,0,Math.PI*2);g.fill();
+   g.fillStyle='#e7b58e';g.fillRect(x-4,y-12+phase,8,8);
+   g.fillStyle=shirt;g.fillRect(x-5,y-4+phase,10,12);
+   g.fillStyle='#39483e';g.fillRect(x-4,y+8,3,6);g.fillRect(x+1,y+8,3,6);
+ }
+ npc(205,185,'#52718b');npc(465,115,'#a75e51',Math.sin(Date.now()/500));npc(555,265,'#e2b65e');npc(115,300,'#6e8e61');npc(650,390,'#8d6e9d');
+ // Player sprite and shadow
+ g.fillStyle='#0003';g.beginPath();g.ellipse(s.x,s.y+13,11,5,0,0,Math.PI*2);g.fill();
+ g.fillStyle='#354f75';g.fillRect(s.x-7,s.y-2,14,16);
+ g.fillStyle='#e8b68d';g.fillRect(s.x-6,s.y-15,12,12);
+ g.fillStyle='#26352d';g.fillRect(s.x-6,s.y-17,12,5);
+ g.fillRect(s.x-5,s.y+13,4,5);g.fillRect(s.x+1,s.y+13,4,5);
+ g.fillStyle='#fff';g.font='10px system-ui';g.textAlign='center';g.fillText(s.name,s.x,s.y+29);
+ const p=near();
+ if(p){g.strokeStyle='#477b5c';g.lineWidth=2;g.setLineDash([5,4]);g.strokeRect(p.x-5,p.y-5,p.w+10,p.h+10);g.setLineDash([]);}
+}
+function doAct(a){let p=near();if(!p)return toast('Dekati bangunan terlebih dahulu.');if(s.energy<5&&a!=='rest')return toast('Energi rendah. Istirahat dulu.');if(a==='school'){if(p.id!=='school')return;if(s.min<360||s.min>900)return toast('Sekolah berlangsung pukul 06.00–15.00.');time(300);s.attendance++;s.progress++;clamp('study',3);clamp('social',2);clamp('energy',-28);clamp('mood',-3);log('Mengikuti kegiatan belajar di sekolah.');toast('Hari sekolah selesai! Kehadiran +1')}
+if(a==='study'){if(!['school','home'].includes(p.id))return;time(90);clamp('study',7);clamp('energy',-12);log('Belajar dengan tekun. Akademik meningkat.');toast('Akademik +7')}
+if(a==='club'){if(p.id!=='school')return;time(90);clamp('social',8);clamp('mood',8);clamp('energy',-10);s.rep=Math.min(100,s.rep+1);log('Mengikuti ekstrakurikuler bersama teman.');toast('Kamu mendapat teman baru!')}
+if(a==='eat'){if(!['home','shop','cafe'].includes(p.id))return;let cost=p.id==='home'?0:p.id==='shop'?12000:25000;if(s.cash<cost)return toast('Uang tidak cukup.');s.cash-=cost;time(25);clamp('hunger',-40);clamp('mood',5);log(cost?'Membeli makanan seharga '+fmt(cost):'Makan di rumah.');toast('Perut kenyang!')}
+if(a==='rest'){if(p.id!=='home')return toast('Pulang ke rumah untuk beristirahat.');time(180);clamp('energy',55);clamp('mood',12);log('Beristirahat di rumah.');toast('Energi pulih!')}
+if(a==='social'){if(!['park','cafe','school','home'].includes(p.id))return;time(60);clamp('social',10);clamp('mood',8);s.relation+=4;log('Mengobrol dan membangun pertemanan.');toast('Hubungan sosial meningkat!')}
+if(a==='work'){if(p.id!=='cafe')return;time(180);s.cash+=45000;clamp('energy',-20);clamp('mood',-3);log('Kerja paruh waktu di kafe +Rp45.000.');toast('Gaji +Rp45.000')}
+if(a==='sport'){if(p.id!=='park')return;time(60);clamp('energy',-13);clamp('mood',12);log('Jogging di taman kota.');toast('Olahraga membuatmu segar!')}render()}
+function renderPlace(){let p=near();$('near').textContent=p?'Dalam jangkauan':'Tidak ada';$('place').textContent=p?p.n:'Jalan perumahan';$('desc').textContent=p?p.d:'Berjalanlah mendekati bangunan untuk melakukan aktivitas. Arah gerak mengikuti jalur isometrik.';let list=p?(p.id==='school'?[['🏫 Masuk sekolah','Belajar 5 jam','school'],['📖 Belajar','Akademik +7','study'],['🎨 Ekstrakurikuler','Sosial +8','club']]:p.id==='home'?[['📚 Belajar di rumah','Akademik +7','study'],['🍛 Makan di rumah','Lapar berkurang','eat'],['🛌 Istirahat','Pulihkan energi','rest'],['💬 Waktu keluarga','Mood & sosial','social']]:p.id==='shop'?[['🍜 Beli makanan','Rp12.000','eat']]:p.id==='cafe'?[['🍜 Beli makanan','Rp25.000','eat'],['💼 Kerja paruh waktu','Dapat Rp45.000','work'],['🗣️ Nongkrong','Sosial +10','social']]:[['🏃 Jogging','Mood & kebugaran','sport'],['🗣️ Berkenalan','Sosial +10','social']]):[['🚶 Jelajahi kota','Berjalan ke lokasi','none']];$('actions').innerHTML=list.map(([n,d,a])=>`<button class="action ${a==='none'?'soft':''}" data-act="${a}">${n}<span>${d}</span></button>`).join('');$('actions').querySelectorAll('button').forEach(b=>b.onclick=()=>b.dataset.act==='none'?toast('Gunakan tombol arah untuk bergerak.'):doAct(b.dataset.act))}
+function pathName(){return ({college:'Mahasiswa',work:'Pekerja',business:'Wirausaha',gap:'Gap year'})[s.path]||'Lulusan SMA'}
+function render(){ $('date').textContent=day()+' · '+s.day;$('clock').textContent=tm();$('hello').textContent='Halo, '+s.name+'!';$('age').textContent=`Usia ${s.age} tahun · ${s.age<18?'Kelas '+s.grade+' SMA':pathName()}`;['cash','study','social','rep','energy','hunger','mood','attendance'].forEach(k=>$(k).textContent=k==='cash'?fmt(s[k]):Math.round(s[k]));$('hungry').textContent=s.hunger>75?'Lapar sekali':s.hunger>45?'Mulai lapar':'Cukup kenyang';let vals=[['Energi',s.energy],['Kenyang',100-s.hunger],['Mood',s.mood],['Sosial',s.social]];$('bars').innerHTML=vals.map(([n,v])=>`<div><div class="barlabel"><span>${n}</span><b>${Math.round(v)}%</b></div><div class="bar"><i class="${v<25?'low':''}" style="width:${v}%"></i></div></div>`).join('');$('grade').textContent=s.age<18?'Kelas '+s.grade:'Jalur '+pathName();$('schoolStatus').textContent=s.age<18?`Kelas ${s.grade} · ${s.progress}/8 kegiatan sekolah`:'Babak kehidupan baru';$('schoolDesc').textContent=s.age<18?'Hadiri sekolah dan kumpulkan 8 kegiatan untuk membuka tahun ajaran berikutnya.':'Pilihan masa depanmu sudah aktif. Terus kembangkan kehidupan.';$('future').innerHTML=s.age<18?`<div class="muted">🎯 Hadiri sekolah 8 kali untuk naik kelas dan bertambah usia.</div><button class="gold" style="width:100%;margin-top:7px" id="advance" ${s.progress<8?'disabled':''}>Naik tahun ajaran</button>`:s.path?`<div class="event"><b>${pathName()}</b><br>${({college:'Lanjut pendidikan tinggi. Belajar dan siapkan biaya kuliah.',work:'Mulai bekerja dan membangun pengalaman profesional.',business:'Merintis usaha sendiri dengan modal dan risiko.',gap:'Mengambil waktu untuk mengeksplorasi pilihan hidup.'})[s.path]}</div><button class="soft" style="width:100%" id="pathAct">Lakukan aktivitas jalur</button>`:'Pilihan masa depan terbuka setelah kelulusan.';$('feed').innerHTML=s.logs.map(t=>`<div>${t}</div>`).join('');$('advance')?.addEventListener('click',advance);$('pathAct')?.addEventListener('click',pathAction);renderPlace();draw();if(s.age>=18&&!s.path)$('modal').classList.add('show')}
+function advance(){if(s.progress<8)return;s.age++;s.grade++;s.progress=0;s.attendance=0;clamp('study',5);s.cash+=50000;log('Naik kelas! Sekarang berusia '+s.age+' tahun.');if(s.age>=18){s.age=18;log('Lulus SMA! Saatnya menentukan masa depan.')}render();toast(s.age>=18?'Selamat lulus SMA!':'Selamat naik kelas!')}
+window.choose=p=>{s.path=p;s.cash+=p==='college'?-30000:p==='work'?120000:p==='business'?-80000:0;log('Memilih jalur masa depan: '+pathName());$('modal').classList.remove('show');render();toast('Babak baru kehidupanmu dimulai!')};
+function pathAction(){if(s.path==='college'){clamp('study',8);s.cash-=15000;time(180);log('Mengikuti kuliah dan belajar.')}else if(s.path==='work'){s.cash+=90000;time(240);clamp('rep',2);log('Bekerja dan menerima gaji Rp90.000.')}else if(s.path==='business'){s.cash+=Math.max(10000,s.rep*1200);time(180);log('Menjalankan usaha kecil.')}else{clamp('social',8);clamp('mood',8);time(120);log('Mencoba pengalaman baru.')}render()}
+document.querySelectorAll('[data-dir]').forEach(b=>b.onclick=()=>{let d=b.dataset.dir;move(d==='right'?1:d==='left'?-1:0,d==='down'?1:d==='up'?-1:0)});window.addEventListener('keydown',e=>{let k=e.key.toLowerCase();if(['arrowup','arrowdown','arrowleft','arrowright','w','a','s','d'].includes(k)){e.preventDefault();move(k==='d'||k==='arrowright'?1:k==='a'||k==='arrowleft'?-1:0,k==='s'||k==='arrowdown'?1:k==='w'||k==='arrowup'?-1:0)}});
+$('world').onclick=e=>{let r=e.target.getBoundingClientRect();s.x=(e.clientX-r.left)/r.width*760;s.y=(e.clientY-r.top)/r.height*470;time(2);render()};$('goHome').onclick=()=>{s.x=155;s.y=145;render();doAct('rest')};$('save').onclick=()=>save(false);if(!s.logs.length)log('Hari pertama. Petualangan SMA dimulai!');render();setInterval(()=>save(true),10000);setInterval(draw,700);
+})();
+</script></body></html>
